@@ -12,22 +12,17 @@ import {trpc} from '@/lib/trpc';
 import classes from './CovidVaccineOverviewChart.module.css';
 
 export default function CovidVaccineOverviewChart() {
-	const {data, isLoading} = trpc.getTest.useQuery('2022-09-04');
+	const {data, isLoading} = trpc.getVaccineOverview.useQuery({latestOnly: true});
 
-	const chartData = [
-		{
-			type: 'First', value: 1000,
-		},
-		{
-			type: 'Second', value: 900,
-		},
-		{
-			type: 'Third', value: 600,
-		},
-	];
+	const {date, ...rest} = data ?? {};
+
+	const chartData = Object.entries(rest).map(([key, value]) => ({
+		type: key,
+		value,
+	}));
 
 	return (
-		<Card title={`Vaccinated People Overview.${data ? ' Latest update: ' + data : ''}`} className={classes.card} bodyStyle={{width: '500px', height: '500px', padding: '0'}}>
+		<Card title={`Vaccinated People Overview.${date ? ' Latest update: ' + date : ''}`} className={classes.card} bodyStyle={{width: '500px', height: '500px', padding: '0'}}>
 			<div className={classes.cardContent}>
 				{isLoading
 					? <Spin size='large'/>
