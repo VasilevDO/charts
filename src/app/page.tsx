@@ -1,4 +1,5 @@
 import {Row, Col, Button} from 'antd';
+import CovidNewCasesChart from './components/CovidNewCasesChart';
 import CovidVaccineOverviewChart from './components/CovidVaccineOverviewChart';
 
 export default function Home() {
@@ -17,7 +18,10 @@ export default function Home() {
 				</Row>
 			</Col>
 			<Col span={24}>
-				<CovidVaccineOverviewChart/>
+				<Row gutter={[24, 24]} justify='center'>
+					<Col><CovidVaccineOverviewChart/></Col>
+					<Col><CovidNewCasesChart/></Col>
+				</Row>
 			</Col>
 		</Row>
 	);
