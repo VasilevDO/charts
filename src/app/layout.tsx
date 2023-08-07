@@ -21,16 +21,16 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className={clsx(inter.className, classes.body)}>
-				<TrpcProvider>
-					<StyledComponentsRegistry>
+			<StyledComponentsRegistry>
+				<body className={clsx(inter.className, classes.body)}>
+					<TrpcProvider>
 						<Header/>
 						<main className={classes.content}>
 							{children}
 						</main>
-					</StyledComponentsRegistry>
-				</TrpcProvider>
-			</body>
+					</TrpcProvider>
+				</body>
+			</StyledComponentsRegistry>
 		</html>
 	);
 }

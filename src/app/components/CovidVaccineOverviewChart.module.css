@@ -5,7 +5,25 @@
 .card :global(.ant-card-body) {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-grow: 1;
+    padding: 0;
+}
+
+.card :global(.ant-divider) {
+    margin: 0;
+}
+
+.cardContent {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardFooter {
+    padding: 0.5rem;
+    width: 100%;
 }
