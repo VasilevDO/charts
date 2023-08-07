@@ -1,7 +1,8 @@
 import './globals.css';
 import type {Metadata} from 'next';
 import {Inter as interGoogle} from 'next/font/google';
-import {TrpcProvider} from '@/lib/trpcProvider';
+import TrpcProvider from '@/lib/trpcProvider';
+import StyledComponentsRegistry from '@/lib/antdRegistry';
 
 const inter = interGoogle({subsets: ['latin']});
 
@@ -18,7 +19,9 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={inter.className}>
 				<TrpcProvider>
-					{children}
+					<StyledComponentsRegistry>
+						{children}
+					</StyledComponentsRegistry>
 				</TrpcProvider>
 			</body>
 		</html>

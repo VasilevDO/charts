@@ -5,9 +5,9 @@ import {httpBatchLink, getFetch, loggerLink} from '@trpc/client';
 import {type PropsWithChildren, useState} from 'react';
 import {trpc} from './trpc';
 
-export const TrpcProvider = ({
+export default function TrpcProvider({
 	children,
-}: PropsWithChildren) => {
+}: PropsWithChildren) {
 	const [queryClient] = useState(
 		() =>
 			new QueryClient({
@@ -45,4 +45,4 @@ export const TrpcProvider = ({
 			</QueryClientProvider>
 		</trpc.Provider>
 	);
-};
+}
