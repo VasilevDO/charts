@@ -36,7 +36,7 @@ export default function CovidVaccineOverviewChart() {
 						startAngle={Math.PI}
 						endAngle={Math.PI * (3 / 2)}
 					/>
-					<Axis name='value' grid={{
+					<Axis name='value' label={{offset: -5}} grid={{
 						line: {
 							type: 'circle',
 						},
