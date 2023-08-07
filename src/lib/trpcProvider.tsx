@@ -22,9 +22,6 @@ export default function TrpcProvider({
 	const [trpcClient] = useState(() =>
 		trpc.createClient({
 			links: [
-				loggerLink({
-					enabled: () => true,
-				}),
 				httpBatchLink({
 					url,
 					async fetch(input, init?) {
