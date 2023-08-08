@@ -9,18 +9,33 @@ import {
 import {trpc} from '@/lib/trpc';
 import ChartCard from './ChartCard';
 
+const chartName = 'vaccine';
+
 export default function CovidVaccineOverviewChart() {
-	const {data, isLoading} = trpc.getVaccineOverview.useQuery({latestOnly: true});
+	const {data, isLoading: isChartDataLoading} = trpc.getVaccineOverview.useQuery({latestOnly: true});
+	const {data: chart, isLoading: isChartLoading} = trpc.getChart.useQuery(chartName);
+
+	const context = trpc.useContext();
+
+	const chartMutation = trpc.updateChart.useMutation({async onSuccess(val) {
+		if (val) {
+			await context.getChart.refetch();
+		}
+	}});
+
+	const handleLikeClick = () => {
+		chartMutation.mutate({name: chartName, isFavorite: !chart?.isFavorite});
+	};
 
 	const {date, ...rest} = data ?? {};
 
 	const chartData = Object.entries(rest).map(([key, value]) => ({
-		type: key,
+		type: `${key} dose`,
 		value,
 	}));
 
 	return (
-		<ChartCard title={`Vaccinated People Overview.${date ? ' Latest update: ' + date : ''}`} isLoading={isLoading}>
+		<ChartCard title={`Vaccinated People Overview${date ? ' by ' + date : ''}`} isLoading={isChartDataLoading || isChartLoading} handleLikeClick={handleLikeClick} isFavorite={Boolean(chart?.isFavorite)}>
 			<Chart data={chartData} autoFit height={420} >
 				<Coordinate
 					type='polar'

@@ -9,18 +9,33 @@ import {
 } from 'bizcharts';
 import ChartCard from './ChartCard';
 
-const CovidNewCasesChart = () => {
-	const {data, isLoading} = trpc.getNewCases.useQuery();
+const chartName = 'newCases';
 
-	const vaildatedData = data?.data.filter((u: any) => u.newCases).sort((a: any, b: any) => a.date > b.date ? 1 : -1);
+const CovidNewCasesChart = () => {
+	const {data: chartData, isLoading: isChartDataLoading} = trpc.getNewCases.useQuery();
+	const {data: chart, isLoading: isChartLoading} = trpc.getChart.useQuery(chartName);
+
+	const context = trpc.useContext();
+
+	const chartMutation = trpc.updateChart.useMutation({async onSuccess(val) {
+		if (val) {
+			await context.getChart.refetch();
+		}
+	}});
+
+	const handleLikeClick = () => {
+		chartMutation.mutate({name: chartName, isFavorite: !chart?.isFavorite});
+	};
 
 	return (
-		<ChartCard title='Covid New Cases' isLoading={isLoading}>
-			<Chart height={400} data={vaildatedData} autoFit>
+		<ChartCard title='Covid New Cases' isLoading={isChartDataLoading || isChartLoading} handleLikeClick={handleLikeClick} isFavorite={Boolean(chart?.isFavorite)}>
+			<Chart height={420} data={
+				chartData?.data.filter(u => u.newCases).sort((a, b) => a.date > b.date ? 1 : -1)
+			} autoFit>
 				<Axis name='date'/>
 				<Axis
 					name='newCases'
-					title={{autoRotate: true, offset: 70, position: 'center', text: 'New Cases'}}
+					title={{autoRotate: true, position: 'center', text: 'New Cases'}}
 				/>
 				<Geom
 					type='line'

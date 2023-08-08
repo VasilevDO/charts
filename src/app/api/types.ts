@@ -20,3 +20,9 @@ type NewCasesOverview = {
 
 export type VaccineOverviewResponse = CovidBaseResponse<VaccineOverview>;
 export type NewCasesResponse = CovidBaseResponse<NewCasesOverview>;
+
+export type ChartDocument = {
+	_id: string;
+	name: string;
+	isFavorite: boolean;
+};

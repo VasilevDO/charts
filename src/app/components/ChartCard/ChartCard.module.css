@@ -1,5 +1,8 @@
 .card {
+    position: relative;
     display: inline-block;
+    width: 100%;
+    max-width: 600px;
 }
 
 .card :global(.ant-card-body) {
@@ -21,9 +24,47 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+    padding: 10px;
 }
 
 .cardFooter {
     padding: 0.5rem;
     width: 100%;
+}
+
+.cardFooter svg {
+    width: 20px;
+    height: 20px;
+    color: grey;
+}
+
+.likeIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: none;
+}
+
+.likeIcon:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.likeIcon:active {
+    transform: scale(1);
+}
+
+.card:hover .likeIcon{
+    display: block;
+}
+
+.likeIcon.favorite {
+    display: block;
+}
+
+.likeIcon.favorite path {
+    fill: red;
 }
